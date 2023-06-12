@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/Katan/IdeaProjects/RestAssuredProject/src/test/java/Day8">
+        <classes>
+            <class name="Day8.createUser">
+                <methods>
+                    <include name="testCreateUserChaining"/>
+                </methods>
+            </class>
+            <class name="Day8.getUser">
+                <methods>
+                    <include name="testGetUserChaining"/>
+                </methods>
+            </class>
+            <class name="Day8.updateUser">
+                <methods>
+                    <include name="testUpdateUserChaining"/>
+                </methods>
+            </class>
+            <class name="Day8.deleteUser">
+                <methods>
+                    <include name="testDeleteUserChaining"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
