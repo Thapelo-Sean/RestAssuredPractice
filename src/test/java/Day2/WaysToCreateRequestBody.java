@@ -14,7 +14,7 @@ public class WaysToCreateRequestBody {
 
 /*Ways to create a request body
 1. Hashmap
-2. Using org.json
+2. Using org.Json
 3. Using POJO (plain Old Java Object)
 4. Using an external json file*/
 
