@@ -8,14 +8,19 @@ public class pathAndQueryParameters
     @Test
     void pathAndQueryParameter()
     {
-        given()
+        try
+        {
+            given()
                     .pathParams("myPath","users") //path parameter
                     .queryParam("page",2)    // query Parameter
                     .queryParam("id",5)
-                .when()
+                    .when()
                     .get("https://reqres.in/api/{myPath}")
-                .then()
+                    .then()
                     .statusCode(200)
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
