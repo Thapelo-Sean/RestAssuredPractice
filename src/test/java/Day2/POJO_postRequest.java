@@ -38,5 +38,4 @@ public class POJO_postRequest {
     public void setCourses(String[] courses) {
         this.courses = courses;
     }
-
 }

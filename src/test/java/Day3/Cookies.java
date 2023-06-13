@@ -11,41 +11,58 @@ public class Cookies
     @Test
     void viewCookies()
     {
-        given()
-                .when()
+        try
+        {
+            given()
+                    .when()
                     .get("https://www.google.com/")
-                .then()
+                    .then()
                     .log().all();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //get a single cookie value
     @Test
     void getCookieValue()
     {
-        Response cookieResponse = given()
-                .when()
+        try
+        {
+            Response cookieResponse = given()
+                    .when()
                     .get("https://www.google.com/");
 
-        String myCookieValue = cookieResponse.getCookie("1P_JAR");
-        System.out.println(myCookieValue);
+            String myCookieValue = cookieResponse.getCookie("1P_JAR");
+            System.out.println(myCookieValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //get all cookie values
     @Test
     void getAllCookies()
     {
-        Response allCookiesResponse = given()
-                .when()
+        try
+        {
+            Response allCookiesResponse = given()
+                    .when()
                     .get("https://www.google.com/");
 
-        Map<String,String> cookieValues = allCookiesResponse.getCookies();
+            Map<String,String> cookieValues = allCookiesResponse.getCookies();
 
-        //Traverse through the cookie values
+            //Traverse through the cookie values
 
-        for (String x: cookieValues.keySet())
-        {
-            String cookieValue = allCookiesResponse.getCookie(x);
-            System.out.println("Key = " + x + ": value = " + cookieValue);
+            for (String x: cookieValues.keySet())
+            {
+                String cookieValue = allCookiesResponse.getCookie(x);
+                System.out.println("Key = " + x + ": value = " + cookieValue);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
