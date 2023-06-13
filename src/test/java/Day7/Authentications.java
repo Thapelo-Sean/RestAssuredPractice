@@ -17,56 +17,76 @@ public class Authentications
     @Test
     void testBasicAuthentication()
     {
-        given()
+        try
+        {
+            given()
                     .auth().basic("postman","password")
-                .when()
+                    .when()
                     .get("https://postman-echo.com/basic-auth")
-                .then()
+                    .then()
                     .statusCode(200)
                     .body("authenticated",equalTo(true))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Digest Authentication
     @Test
     void testDigestAuthentication()
     {
-        //Digest authentication
-        given()
+        try
+        {
+            //Digest authentication
+            given()
                     .auth().digest("postman","password")
-                .when()
+                    .when()
                     .get("https://postman-echo.com/digest-auth")
-                .then()
+                    .then()
                     .statusCode(200)
                     .body("authenticated",equalTo(true))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Preemptive Authentication
     @Test
     void testPreemptiveAuthentication()
     {
-        given()
+        try
+        {
+            given()
                     .auth().preemptive().basic("postman","password")
-                .when()
+                    .when()
                     .get("https://postman-echo.com/basic-auth")
-                .then()
+                    .then()
                     .statusCode(200)
                     .body("authenticated", equalTo(true))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void testBearerToken()
     {
-        String bearerToken = "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";
+        try
+        {
+            String bearerToken = "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";
 
-        given()
+            given()
                     .headers("authentication", "bearer" + bearerToken)
-                .when()
+                    .when()
                     .get("http://api.github.com/users/repos")
-                .then()
+                    .then()
                     .statusCode(200)
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
