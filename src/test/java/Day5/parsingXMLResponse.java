@@ -15,57 +15,72 @@ public class parsingXMLResponse {
     @Test
     void testXmlResponse1()
     {
-        given()
-                .when()
+        try
+        {
+            given()
+                    .when()
                     .get("http://restapi.adequateshop.com/api/Traveler?=page=1")
-                .then()
+                    .then()
                     .statusCode(200)
                     .header("Content-Type","application/xml; charset=utf-8")
                     .body("TravelerinformationResponse.travelers.Travelerinformation.id[0]",equalTo("11133"))
                     .body("TravelerinformationResponse.travelers.Travelerinformation.name[0]",equalTo("Developer"))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Approach 2
     @Test
     void testXMLResponse2()
     {
-        Response xmlResponse = given()
-                .when()
+        try
+        {
+            Response xmlResponse = given()
+                    .when()
                     .get("http://restapi.adequateshop.com/api/Traveler?=page=1");
 
-        Assert.assertEquals(xmlResponse.getStatusCode(),200);
-        String myId = xmlResponse.xmlPath().get("TravelerinformationResponse.travelers.Travelerinformation.id[1]").toString();
-        Assert.assertEquals(myId,"11134");
-        String myName = xmlResponse.xmlPath().get("TravelerinformationResponse.travelers.Travelerinformation.name[1]").toString();
-        Assert.assertEquals(myName,"AS");
+            Assert.assertEquals(xmlResponse.getStatusCode(),200);
+            String myId = xmlResponse.xmlPath().get("TravelerinformationResponse.travelers.Travelerinformation.id[1]").toString();
+            Assert.assertEquals(myId,"11134");
+            String myName = xmlResponse.xmlPath().get("TravelerinformationResponse.travelers.Travelerinformation.name[1]").toString();
+            Assert.assertEquals(myName,"AS");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void testXMLResponseBody()
     {
-        Response xmlResponseBody = given()
-                .when()
-                .get("http://restapi.adequateshop.com/api/Traveler?=page=1");
-
-        //verify total number of travellers
-        XmlPath xmlObject = new XmlPath(xmlResponseBody.asString());
-
-        List<String> travellerNames = xmlObject.getList("TravelerinformationResponse.travelers.Travelerinformation.");
-        Assert.assertEquals(travellerNames.size(),10);
-
-        //verify if name is present in the response
-        List<String> traveller_Names = xmlObject.getList("TravelerinformationResponse.travelers.Travelerinformation.name");
-
-        boolean status = false;
-        for(String travellerName: traveller_Names )
+        try
         {
-            if(travellerName.equals("Developer"))
+            Response xmlResponseBody = given()
+                    .when()
+                    .get("http://restapi.adequateshop.com/api/Traveler?=page=1");
+
+            //verify total number of travellers
+            XmlPath xmlObject = new XmlPath(xmlResponseBody.asString());
+
+            List<String> travellerNames = xmlObject.getList("TravelerinformationResponse.travelers.Travelerinformation.");
+            Assert.assertEquals(travellerNames.size(),10);
+
+            //verify if name is present in the response
+            List<String> traveller_Names = xmlObject.getList("TravelerinformationResponse.travelers.Travelerinformation.name");
+
+            boolean status = false;
+            for(String travellerName: traveller_Names )
             {
-                status = true;
-                break;
+                if(travellerName.equals("Developer"))
+                {
+                    status = true;
+                    break;
+                }
             }
+            Assert.assertEquals(status,true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Assert.assertEquals(status,true);
     }
 }

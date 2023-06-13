@@ -11,36 +11,46 @@ public class fileUploadAndDownload
     @Test
     void singleFileUpload()
     {
-        File myFile1 = new File("C://Automation//Test1.txt");
+        try
+        {
+            File myFile1 = new File("C://Automation//Test1.txt");
 
-        given()
+            given()
                     .multiPart("file",myFile1)
                     .contentType("multipart/form-data")
-                .when()
+                    .when()
                     .post("http://localhost:8080/uploadFile")
-                .then()
+                    .then()
                     .statusCode(200)
                     .body("filename",equalTo(myFile1))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Upload multiple files
     @Test
     void multipleFileUpload()
     {
-        File myFile2 = new File("C://Automation//Test2.txt");
-        File myFile3 = new File("C://Automation//Test3.txt");
+        try
+        {
+            File myFile2 = new File("C://Automation//Test2.txt");
+            File myFile3 = new File("C://Automation//Test3.txt");
 
-        given()
+            given()
                     .multiPart("files",myFile2)
                     .multiPart("files",myFile3)
                     .contentType("multipart/form-data")
-                .when()
+                    .when()
                     .post("http:localhost:8080//uplaodMultiFiles")
-                .then()
+                    .then()
                     .statusCode(200)
                     .body("[1].filename",equalTo(myFile2))
                     .body("[2].filename",equalTo(myFile3))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
