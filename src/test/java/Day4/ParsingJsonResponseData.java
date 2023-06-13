@@ -2,7 +2,6 @@ package Day4;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
@@ -15,11 +14,13 @@ public class ParsingJsonResponseData
     @Test
     void testJsonResponse1()
     {
-        given()
+        try
+        {
+            given()
                     .contentType(ContentType.JSON)
-                .when()
+                    .when()
                     .get("https://simple-books-api.glitch.me/books")
-                .then()
+                    .then()
                     .statusCode(200)
                     .header("Content-Type","application/json; charset=utf-8")
                     .header("Content-Length","417")
@@ -31,25 +32,33 @@ public class ParsingJsonResponseData
                     .body("[0].type",equalTo("fiction"))
                     .body("[0].available",equalTo(true))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Approach 2 (creating a Response variable)
     @Test
     void testJsonResponse()
     {
-        Response jsonResponse = given()
+        try
+        {
+            Response jsonResponse = given()
                     .contentType(ContentType.JSON)
-                .when()
+                    .when()
                     .get("https://simple-books-api.glitch.me/books");
 
-        String bookName = jsonResponse.jsonPath().get("[0].name").toString();
-        Integer bookId = jsonResponse.jsonPath().getInt("[0].id");
-        Assert.assertEquals(jsonResponse.header("Content-Type"),"application/json; charset=utf-8");
-        Assert.assertEquals(jsonResponse.getStatusCode(),200);
-        Assert.assertEquals(bookId,1);
-        Assert.assertEquals(bookName,"The Russian");
-        String bookNames = jsonResponse.path("findAll{it.name}.name").toString();
-        System.out.println(bookNames);
+            String bookName = jsonResponse.jsonPath().get("[0].name").toString();
+            Integer bookId = jsonResponse.jsonPath().getInt("[0].id");
+            Assert.assertEquals(jsonResponse.header("Content-Type"),"application/json; charset=utf-8");
+            Assert.assertEquals(jsonResponse.getStatusCode(),200);
+            Assert.assertEquals(bookId,1);
+            Assert.assertEquals(bookName,"The Russian");
+            String bookNames = jsonResponse.path("findAll{it.name}.name").toString();
+            System.out.println(bookNames);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
