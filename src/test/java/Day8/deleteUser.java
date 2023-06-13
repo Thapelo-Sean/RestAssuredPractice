@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 
 public class deleteUser {
-
     @Test
     void testDeleteUserChaining(ITestContext context)
     {
