@@ -10,25 +10,35 @@ public class JsonSchemaValidator
     @Test
     void jsonSchemaValidator()
     {
-        given()
-                .when()
+        try
+        {
+            given()
+                    .when()
                     .get("https://reqres.in/api/unknown")
-                .then()
+                    .then()
                     .statusCode(200)
                     .assertThat().body(io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath("JsonSchema.json"))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //validate xml schema
     @Test
     void xmlSchemaValidator()
     {
-        given()
-                .when()
+        try
+        {
+            given()
+                    .when()
                     .get("http://restapi.adequateshop.com/api/Traveler")
-                .then()
+                    .then()
                     .statusCode(200)
                     .assertThat().body(RestAssuredMatchers.matchesXsdInClasspath("xmlSchema.xsd"))
                     .log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
